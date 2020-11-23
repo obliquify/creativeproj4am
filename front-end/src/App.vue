@@ -15,6 +15,9 @@
   </div>
   <div class="footer">
     <router-link to="/admin">Admin</router-link>
+    <br>
+    <a target="blank" href="https://github.com/BYU-CS-260-Winter-2020/lab-4-museum-of-ordinary-objects-obliquify.git">My Repository</a>
+
   </div>
 </div>
 </template>

@@ -7,6 +7,7 @@
       <img :src="item.path" />
     </div>
   </section>
+
 </div>
 </template>
 
