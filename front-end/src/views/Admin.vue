@@ -7,16 +7,12 @@
     </div>
     <div class="add">
       <div class="form">
+        <h1>Give A Name</h1>
         <input v-model="title" placeholder="Title" />
         <p></p>
         <input type="file" name="photo" @change="fileChanged" />
         <button @click="upload">Upload</button>
       </div>
-
-      <div class = "form">
-        <input v-model="description" placeholder = "Description" />
-      </div>
-
 
       <div class="upload" v-if="addItem">
         <h2>{{addItem.title}}</h2>
@@ -25,6 +21,11 @@
       </div>
     </div>
 
+    <div class = "descrip">
+        <h1>Description</h1>
+        <textarea v-model="description" placeholder="Start typing here..."></textarea>
+    </div>
+ 
     <div class="heading">
       <div class="circle">2</div>
       <h2>Edit/Delete an Item</h2>
@@ -194,6 +195,10 @@ button {
 
 .form {
   margin-right: 50px;
+}
+
+.form-descrip {
+  margin: 0px;
 }
 
 /* Uploaded images */
