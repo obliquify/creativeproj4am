@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Admin from '../views/Admin.vue'
+import Upload from '../views/Upload.vue'
+import Thought from '../views/Stream.vue'
+import Hi from '../views/Hi.vue'
 
 Vue.use(VueRouter)
 
@@ -11,14 +13,24 @@ const routes = [{
     component: Home
   },
   {
-    path: '/admin',
-    name: 'admin',
-    component: Admin
+    path: '/upload',
+    name: 'upload',
+    component: Upload
+  },
+  {
+    path: '/thought',
+    name: 'thought',
+    component: Thought
+  },
+  {
+    path: '/hi',
+    name: 'hi',
+    component: Hi
   }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })

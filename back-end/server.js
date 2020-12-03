@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require("body-parser");
-
+const moment = require('moment'); 
+const path = require('path'); 
 const multer = require('multer')
 const upload = multer({
   dest: '../front-end/public/images/',
@@ -17,6 +18,8 @@ app.use(bodyParser.urlencoded({
 
 const mongoose = require('mongoose');
 
+app.use(express.static(path.join(__dirname,"../front-end/dist")))
+
 // connect to the database
 
 // Create a scheme for items in the museum: a title and a path to an image.
@@ -26,11 +29,25 @@ const itemSchema = new mongoose.Schema({
   path: String,
 });
 
+const thoughtSchema = new mongoose.Schema({
+  name: String,
+  thought: String, 
+  date: String, 
+});
+
+// moment().format('MMMM Do YYYY, h:mm a'),
+
+
+
+
 // Create a model for items in the museum.
 const Item = mongoose.model('Item', itemSchema);
 
-mongoose.connect('mongodb://localhost:27017/museum', {
-  useNewUrlParser: true
+const Thought = mongoose.model('Thought', thoughtSchema); 
+
+mongoose.connect('mongodb+srv://kallie:cherry@cluster0.qbkvj.mongodb.net/creativeProject4?retryWrites=true&w=majority', {
+  useNewUrlParser: true,
+   useUnifiedTopology: true 
 });
 
 // app.get('/hi', (req, res) => {
@@ -51,8 +68,11 @@ app.post('/api/photos', upload.single('photo'), async (req, res) => {
 });
 
 
+
 app.post('/api/items', async (req, res) => {
-  console.log("help");
+  // console.log(req.body.path);
+  // return; 
+  // console.log("help");
   const item = new Item({
     title: req.body.title,
     description: req.body.description,
@@ -111,22 +131,72 @@ app.put('/api/items/:id', async (req, res) => {
     }
   });
 
-
-//   if(err) {
-//     console.log(err);
-//     return;
-//   } else {
-//     item.title  = req.body.title,
-//     // item.path = req.body.path,
-//     item.save(item),
-//     res.send(item),
-//   }
-// } catch(error) {
-//   console.log(err)
-// } 
-
-   
-
 });
 
-app.listen(3000, () => console.log('Server listening on port 3000!'));
+app.get("/api/deleteAll/:password", (req , res) => {
+    if(req.params.password === "cherry"){
+    Thought.remove((err , haha) => {
+      if(err){
+        console.log(err)
+      }else{
+        console.log(haha); 
+        res.status(200).json({msg:"Deleted all stuff"})
+      }
+    })
+  }
+  else{
+    res.status(402).json({msg:"Access denied"})
+  }
+})
+
+
+app.post('/api/thoughts',  (req, res) => {
+ console.log(moment().format('MMMM Do YYYY, h:mm a'));
+
+  const thought = new Thought({
+    name: req.body.name, 
+    thought: req.body.thought,
+    date: moment().format('MMMM Do YYYY, h:mm a'),
+  }); 
+  console.log(thought); 
+ 
+    thought.save((err, thought) => {
+    if(err){
+     res.status(500).json({msg: "Server err"});
+     return; 
+    }else{
+      console.log("hi")
+     res.status(200).json({thought});
+     return; 
+    }
+  }); 
+
+})
+
+app.get('/api/thoughts', (req, res) => {
+  Thought.find((err, thoughts)=> {
+    if(err){
+      res.status(500).json({msg:"Server error"}); 
+    }else{
+      res.status(200).json(thoughts); 
+    }
+  })
+})
+
+app.delete('/api/thoughts/:id', async (req, res) => {
+  console.log("delete!");
+  try {
+    await Thought.deleteOne({
+      _id: req.params.id
+    });
+    res.sendStatus(200);
+
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+
+ 
+app.listen(5000, () => console.log('Server listening on port 5000!'));

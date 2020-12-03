@@ -1,17 +1,17 @@
 <template>
-  <div class="admin">
-    <h1>The Admin Page!</h1>
+  <div class="upload">
+    <h1>Upload!</h1>
     <div class="heading">
-      <div class="circle">1</div>
-      <h2>Add an Item</h2>
+      <div class="square">1</div>
+      <h2>Deposit item :)</h2>
     </div>
     <div class="add">
       <div class="form">
         <h1>Give A Name</h1>
-        <input v-model="title" placeholder="Title" />
+        <input v-model="title" placeholder="Name" />
         <p></p>
         <input type="file" name="photo" @change="fileChanged" />
-        <button @click="upload">Upload</button>
+        <button class="uploadie" @click="upload">Upload</button>
       </div>
 
       <div class="upload" v-if="addItem">
@@ -21,13 +21,13 @@
       </div>
     </div>
 
-    <div class = "descrip">
-        <h1>Description</h1>
-        <textarea v-model="description" placeholder="Start typing here..."></textarea>
+    <div class="descrip">
+      <h1>Description</h1>
+      <textarea v-model="description" placeholder="Start typing here..."></textarea>
     </div>
- 
+
     <div class="heading">
-      <div class="circle">2</div>
+      <div class="square">2</div>
       <h2>Edit/Delete an Item</h2>
     </div>
 
@@ -35,15 +35,18 @@
       <div class="form">
         <input v-model="findTitle" placeholder="Search" />
         <div class="suggestions" v-if="suggestions.length > 0">
-          <div class="suggestion" v-for="s in suggestions" :key="s.id" @click="selectItem(s)">
-            {{s.title}}
-          </div>
+          <div
+            class="suggestion"
+            v-for="s in suggestions"
+            :key="s.id"
+            @click="selectItem(s)"
+          >{{s.title}}</div>
         </div>
       </div>
 
       <div class="upload" v-if="findItem">
         <input class="title" v-model="findItem.title" />
-        <input class = "descrip" v-model="findItem.description"/>
+        <input class="descrip" v-model="findItem.description" />
         <p></p>
         <img :src="findItem.path" />
       </div>
@@ -60,7 +63,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Admin",
+  name: "Upload",
 
   data() {
     return {
@@ -76,9 +79,11 @@ export default {
 
   computed: {
     suggestions() {
-      let items = this.items.filter(item => item.title.toLowerCase().startsWith(this.findTitle.toLowerCase()));
+      let items = this.items.filter((item) =>
+        item.title.toLowerCase().startsWith(this.findTitle.toLowerCase())
+      );
       return items.sort((a, b) => a.title > b.title);
-    }
+    },
   },
 
   created() {
@@ -95,6 +100,7 @@ export default {
         const formData = new FormData();
         formData.append("photo", this.file, this.file.name);
         let r1 = await axios.post("/api/photos", formData);
+       
         let r2 = await axios.post("/api/items", {
           title: this.title,
           description: this.description,
@@ -145,7 +151,6 @@ export default {
         console.log(error);
       }
     },
-    
   },
 };
 </script>
@@ -153,6 +158,18 @@ export default {
 
 
 <style scoped>
+.upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px;
+  width: auto;
+  /* background-color: #FFEDE1; */
+  align-items: stretch;
+  align-content: center;
+
+}
+
 .image h2 {
   font-style: italic;
   font-size: 1em;
@@ -174,12 +191,10 @@ export default {
   display: flex;
 }
 
-.circle {
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  padding: 8px;
-  background: #333;
+.square {
+  width: 30px;
+  height: 30px;
+  background: #c3dac3;
   color: #fff;
   text-align: center;
 }
@@ -213,7 +228,6 @@ button {
 /* Suggestions */
 .suggestions {
   width: 200px;
-  border: 1px solid #ccc;
 }
 
 .suggestion {
@@ -221,7 +235,16 @@ button {
 }
 
 .suggestion:hover {
-  background-color: #5bdeff;
+  background-color: #c3dac3;
   color: #fff;
+}
+
+.uploadie
+{
+  background-color: #c3dac3;
+}
+
+.descrip {
+  margin-top: 40px;
 }
 </style>

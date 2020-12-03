@@ -1,34 +1,69 @@
 <template>
-<div id="app">
-  <div class="header">
-    <router-link to="/">
-      <div class="logo">
-        <img src="/ordinary.png">
+  <div id="app">
+    <div class="header">
+      <router-link to="/">
+        <div class="logo">
+          <img src="/telescope.png" alt="Telescope" style="width:50px" />
+        </div>
+      </router-link>
+      <div class="title">
+        <h1>Contemplative Exploration</h1>
       </div>
-    </router-link>
-    <div class="title">
-      <h1>Museum of Ordinary Objects</h1>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <router-link class="nav-link" to="/">Gallery</router-link>
+          </li>
+
+          <li class="nav-item">
+            <!-- <a class="nav-link" href="#">Features</a> -->
+            <router-link class="nav-link" to="/upload">Upload</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/thought">Thought-Stream</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/hi">Hi</router-link>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="content">
+      <router-view />
+    </div>
+    <div class="footer">
+      <p>2020 &#169; Kallie</p>
+      <a target="blank" href="https://github.com/obliquify/creativeproj4am.git">Reposit</a>
     </div>
   </div>
-  <div class="content">
-    <router-view />
-  </div>
-  <div class="footer">
-    <router-link to="/admin">Admin</router-link>
-    <br>
-    <a target="blank" href="https://github.com/BYU-CS-260-Winter-2020/lab-4-museum-of-ordinary-objects-obliquify.git">My Repository</a>
-
-  </div>
-</div>
 </template>
 
 <style>
+#app {
+  font-family: "Courier", monospace-serif;
+  background-color: #f9e7e7;
+}
 html {
   box-sizing: border-box;
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Courier", monospace-serif;
   font-size: 16px;
   background: #fff;
   padding: 0px;
@@ -39,8 +74,10 @@ body {
 .header {
   display: flex;
   padding: 10px 100px 0px 100px;
-  background-color: #5BDEFF;
-  color: #1C454F;
+  background-color: #f9e7e7;
+  color: #636564;
+  justify-content: center;
+  align-items: center;
 }
 
 .title {
@@ -48,7 +85,7 @@ body {
 }
 
 .title h1 {
-  font-size: 30px;
+  font-size: 45px;
 }
 
 .content {
@@ -58,14 +95,17 @@ body {
 
 /* Footer */
 .footer {
+  display: flex;
+  justify-content: center;
   height: 50px;
   padding: 20px 100px 0px 100px;
-  background: #e3e3e3;
+  background: #faf9f9;
   font-size: 12px;
 }
 
 .footer a {
   color: #000;
+  margin-left: 50px;
 }
 
 h1 {
@@ -74,5 +114,13 @@ h1 {
 
 h2 {
   font-size: 14px;
+}
+
+.logo {
+  padding: 40px;
+}
+
+.navbar {
+  background-color: #faf9f9;
 }
 </style>
